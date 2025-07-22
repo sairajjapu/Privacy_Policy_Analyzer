@@ -1,1 +1,1 @@
-# Privacy-Policy-Analyzer-
+# Privacy-Policy-Analyzer
