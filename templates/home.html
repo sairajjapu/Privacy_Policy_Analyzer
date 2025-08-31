@@ -1,25 +1,21 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Analyze Privacy Policy</title>
+    <title>Privacy Policy Analyzer</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
+        body {
             font-family: 'Segoe UI', sans-serif;
             background: linear-gradient(to right, #e1f5fe, #fce4ec);
+            text-align: center;
+            padding: 2rem;
+            margin: 0;
+            padding: 0;
         }
-
+        /* Navbar */
         .navbar {
             background-color: #00796b;
             padding: 1rem 2rem;
@@ -35,7 +31,6 @@
         .navbar h2 {
             margin: 0;
             font-size: 1.5rem;
-            color: white;
         }
 
         .nav-links {
@@ -87,68 +82,61 @@
             }
         }
 
-        .main-content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
+        /* Main Content */
+        .section {
+            max-width: 900px;
+            margin: 2rem auto;
             background: #ffffff;
             padding: 2rem;
             border-radius: 15px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            text-align: center;
         }
 
-        h2 {
-            color:  #00695c;
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1.5rem;
+        h1 {
+            font-size: 2.5rem;
+            color: #00796b;
         }
 
-        form label {
-            display: block;
-            margin-top: 1rem;
+        ul {
             text-align: left;
-            color: #333;
-            font-weight: 600;
+            margin: 1rem auto;
+            display: inline-block;
+            padding-left: 1rem;
         }
 
-        form input, form select {
-            width: 100%;
-            padding: 1rem;
-            margin-top: 0.5rem;
-            border: 2px solid #ccc;
-            border-radius: 10px;
+        li {
+            margin-bottom: 0.5rem;
         }
 
-        form button {
-            margin-top: 1.5rem;
-            background-color: #00796b;
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 10px;
+        .highlight {
+            color: #d32f2f;
             font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
         }
 
-        form button:hover {
+        .button {
+            margin-top: 2rem;
+            display: inline-block;
+            background-color: #00796b;
+            color: #fff;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .button:hover {
             background-color: #004d40;
-            transform: scale(1.05);
         }
 
+        /* Footer */
         .footer {
             background-color: #004d40;
+            position: relative;
             color: #fff;
             padding: 1rem 2rem;
             text-align: center;
+            margin-top: 4rem;
         }
 
         .footer p {
@@ -158,40 +146,35 @@
     </style>
 </head>
 <body>
+
     <!-- Navbar -->
     <div class="navbar">
         <h2>Privacy Analyzer</h2>
-        <div class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+        <div class="hamburger" onclick="toggleMenu()">
             <div></div>
             <div></div>
             <div></div>
         </div>
         <div class="nav-links" id="navLinks">
             <a href="{{ url_for('home') }}">Home</a>
-            <a href="{{ url_for('analyze') }}">About Us</a>
-            <a href="{{ url_for('contact') }}">Contact</a>
+            <a href="{{ url_for('analyze') }}">Analyze</a>
+            <a href="{{ url_for('contact') }}">Contact Us</a>
         </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <div class="container">
-            <h2>🔍 Analyze a Privacy Policy</h2>
-            <form action="{{ url_for('analyze_result') }}" method="POST">
-                <label for="policy_url">Privacy Policy URL</label>
-                <input id="policy_url" type="url" name="policy_url" placeholder="Paste the Privacy Policy URL here..." required>
-
-                <label for="language">Preferred Language</label>
-                <select id="language" name="language" required>
-                    <option value="" disabled selected>Choose your preferred language</option>
-                    <option value="en">English</option>
-                    <option value="hi">Hindi</option>
-                    <option value="te">Telugu</option>
-                </select>
-
-                <button type="submit">Analyze</button>
-            </form>
-        </div>
+    <!-- Main Section -->
+    <div class="section">
+        <h1>🔐 Privacy Policy Analyzer</h1>
+        <p><strong>Tired of reading endless privacy policies?</strong> So are we. Most people just click “Agree” without even reading them.</p>
+        <p>This tool does the boring part for you. We help you:</p>
+        <ul>
+            <li>✅ <strong>Simplify</strong> long and complex policies into plain, user-friendly summaries.</li>
+            <li>⚠️ <span class="highlight">Detect dark patterns</span> – like hidden charges, consent traps, and data selling tricks.</li>
+            <li>🎯 Focus only on what <strong>you need to know</strong> as a user – not what companies bury in legal jargon.</li>
+        </ul>
+        <p>We believe in privacy, transparency, and giving you the power to understand what you're agreeing to – <strong>without reading a novel</strong>.</p>
+        <p><strong>No data is stored.</strong> No funny business.</p>
+        <a href="{{ url_for('analyze') }}" class="button">🔍 Start Analyzing</a>
     </div>
 
     <!-- Footer -->
@@ -199,12 +182,13 @@
         <p>&copy; 2025 Privacy Policy Analyzer | Made with ❤️ to protect your rights</p>
     </div>
 
-    <!-- JS -->
+    <!-- JavaScript for Mobile Nav -->
     <script>
         function toggleMenu() {
             const nav = document.getElementById('navLinks');
             nav.classList.toggle('active');
         }
     </script>
+
 </body>
 </html>

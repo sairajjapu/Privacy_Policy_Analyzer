@@ -3,6 +3,16 @@ import spacy
 import requests
 from bs4 import BeautifulSoup
 from textblob import TextBlob
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+# --- SMTP CONFIG ---
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = 587
+SMTP_USER = "japukannayya@gmail.com"
+SMTP_PASSWORD = "zeeo zvzl njry dzjq"   # App password, not your Gmail login
+
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'  # Required for flash messages
@@ -72,23 +82,76 @@ def analyze():
 def contact():
     return render_template('contact.html')
 
+def send_contact_email(name, email,subject, message):
+    subject = f"New Contact Message from {name}"
+    
+    html_content = f"""
+    <h2>Privacy Policy Analyzer</h2>
+    <h2>Contact Form Submission</h2>
+    <p><b>Name:</b> {name}</p>
+    <p><b>Email:</b> {email}</p>
+    <p><b>Subject:</b> {subject}</p>
+    <p><b>Message:</b><br>{message}</p>
+    """
+    SMTP_ADMIN="sairajjapu@gmail.com"
+    msg = MIMEMultipart()
+    msg["From"] = SMTP_USER
+    msg["To"] = SMTP_ADMIN   # send to yourself (admin email)
+    msg["Subject"] = subject
+    msg.attach(MIMEText(html_content, "html"))
+
+    try:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(SMTP_USER, SMTP_PASSWORD)
+            server.sendmail(SMTP_USER, SMTP_USER, msg.as_string())
+        return True
+    except Exception as e:
+        print("Error sending email:", e)
+        return False
+
+
 @app.route('/submit_contact', methods=['POST'])
 def submit_contact():
     name = request.form.get('name')
     email = request.form.get('email')
+    subject = request.form.get('subject')
     message = request.form.get('message')
 
-    # Simulate sending/storing message here
-    print(f"New Contact Message:\nFrom: {name} <{email}>\nMessage: {message}")
-    flash("Thank you for reaching out! We’ll get back to you shortly.", "success")
+    if not name or not email or not message:
+        flash("All fields are required.", "error")
+        return redirect(url_for("contact"))
+
+    # Send email via SMTP
+    success = send_contact_email(name, email, subject, message)
+
+    if success:
+        flash("✅ Your message has been sent successfully!", "success")
+    else:
+        flash("❌ Failed to send your message. Please try again later.", "error")
+
     return redirect(url_for('contact'))
+
+
+
 
 @app.route('/analyze_result', methods=['POST'])
 def analyze_result():
-    url = request.form['url']
-    language = request.form.get('language')  # Placeholder for i18n
+    url = request.form.get('url')  # match form input name
+    if not url:
+        flash("Please provide a URL to analyze.", "error")
+        return redirect(url_for('analyze'))
+
+    language = request.form.get('language')
     critical, harmless, flag = analyze_policy_url(url)
-    return render_template('result.html', url=url, critical=critical, harmless=harmless, dark_flag=flag)
+    return render_template(
+        'result.html',
+        url=url,
+        critical=critical,
+        harmless=harmless,
+        dark_flag=flag
+    )
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analysis Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background: linear-gradient(to right, #e1f5fe, #fce4ec);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: #00796b;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+        }
+
+        .navbar h2 { 
+            margin: 0; 
+            font-size: 1.5rem; 
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #00695c;
+            margin-bottom: 1rem;
+        }
+
+        .status {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        .status.success { color: green; }
+        .status.warning { color: red; }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section h3 {
+            color: #00796b;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+        }
+
+        .footer {
+            background-color: #004d40;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <h2>Privacy Analyzer</h2>
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}" style="color:white; text-decoration:none; margin-right:1rem;">Home</a>
+            <a href="{{ url_for('analyze') }}" style="color:white; text-decoration:none; margin-right:1rem;">Analyze</a>
+            <a href="{{ url_for('contact') }}" style="color:white; text-decoration:none;">Contact</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <h2>🔍 Analysis Result</h2>
+            <p><strong>Analyzed URL:</strong> <a href="{{ url }}" target="_blank">{{ url }}</a></p>
+
+            {% if dark_flag %}
+                <p class="status warning">⚠️ Potential dark patterns detected in this policy.</p>
+            {% else %}
+                <p class="status success">✅ No critical dark patterns detected.</p>
+            {% endif %}
+
+            <div class="section">
+                <h3>⚠️ Critical Sentences</h3>
+                {% if critical %}
+                    <ul>
+                        {% for sentence in critical %}
+                            <li>{{ sentence }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No critical sentences found.</p>
+                {% endif %}
+            </div>
+
+            <div class="section">
+                <h3>✔️ Harmless Sentences</h3>
+                {% if harmless %}
+                    <ul>
+                        {% for sentence in harmless %}
+                            <li>{{ sentence }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No harmless sentences extracted.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 Privacy Policy Analyzer | Made with ❤️</p>
+    </div>
+</body>
+</html>

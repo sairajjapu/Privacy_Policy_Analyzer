@@ -157,8 +157,8 @@
         </div>
         <div class="nav-links" id="navLinks">
             <a href="{{ url_for('home') }}">Home</a>
-            <a href="{{ url_for('analyze') }}">About Us</a>
-            <a href="{{ url_for('contact') }}">Contact</a>
+            <a href="{{ url_for('analyze') }}">Analyze</a>
+            <a href="{{ url_for('contact') }}">Contact Us</a>
         </div>
     </div>
 
@@ -166,7 +166,23 @@
 <div class="section">
     <h1>📫 Contact Us</h1>
     <p>If you have any questions, feedback, or need assistance, feel free to reach out!</p>
-    <form action="" method="POST" style="text-align: left; max-width: 600px; margin: 0 auto;">
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-messages" style="margin-bottom: 1rem;">
+        {% for category, message in messages %}
+            <div class="flash {{ category }}" 
+                style="padding: 0.75rem; border-radius: 8px; margin-bottom: 0.5rem;
+                        {% if category == 'success' %}background-color: #c8e6c9; color: #256029; border: 1px solid #2e7d32;
+                        {% elif category == 'error' %}background-color: #ffcdd2; color: #b71c1c; border: 1px solid #c62828;
+                        {% endif %}">
+            {{ message }}
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+    <form action="{{ url_for('submit_contact') }}" method="POST" style="text-align: left; max-width: 600px; margin: 0 auto;">
         <label for="name">Name:</label><br>
         <input type="text" id="name" name="name" required style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border-radius: 5px; border: 1px solid #ccc;"><br>
 
@@ -179,9 +195,43 @@
         <label for="message">Message:</label><br>
         <textarea id="message" name="message" rows="5" required style="width: 100%; padding: 0.5rem; border-radius: 5px; border: 1px solid #ccc;"></textarea><br>
 
-        <button type="submit" class="button">📨 Send Message</button>
-    </form>
+        <center><button type="submit" class="button">📨 Send Message</button></center>
+    </form>    
 </div>
+<!-- Team / Developer Details Section -->
+<div class="team-card" style="margin-top: 2rem; padding: 1.2rem; border: 1px solid #ddd; border-radius: 10px; background: #f9f9f9; max-width: 900px; margin-left:auto; margin-right:auto;">
+    <h3 style="margin-bottom: 1rem; color:#333; text-align:center;">🤝 Meet the Team</h3>
+    <p style="text-align:center; margin-bottom:1.5rem;">We’d love to hear from you! Reach out to any of us below:</p>
+
+    <div style="display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:center;">
+        
+        <!-- Member 1 -->
+        <div style="flex:1 1 250px; border:1px solid #ccc; border-radius:8px; padding:1rem; background:#fff; text-align:center;">
+            <img src="{{ url_for('static', filename='Joint Secretary.jpeg') }}" alt="Sairaj Japu" style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:0.8rem;">
+            <h4>Sairaj Japu</h4>
+            <p><strong>Email:</strong> <a href="mailto:sairaj@example.com">sairaj@example.com</a></p>
+            <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/sairaj" target="_blank">linkedin.com/in/sairaj</a></p>
+        </div>
+
+        <!-- Member 2 -->
+        <div style="flex:1 1 250px; border:1px solid #ccc; border-radius:8px; padding:1rem; background:#fff; text-align:center;">
+            <img src="{{ url_for('static', filename='images/member2.jpg') }}" alt="Teammate 2" style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:0.8rem;">
+            <h4>Teammate 2</h4>
+            <p><strong>Email:</strong> <a href="mailto:member2@example.com">member2@example.com</a></p>
+            <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/member2" target="_blank">linkedin.com/in/member2</a></p>
+        </div>
+
+        <!-- Member 3 -->
+        <div style="flex:1 1 250px; border:1px solid #ccc; border-radius:8px; padding:1rem; background:#fff; text-align:center;">
+            <img src="{{ url_for('static', filename='images/member3.jpg') }}" alt="Teammate 3" style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:0.8rem;">
+            <h4>Teammate 3</h4>
+            <p><strong>Email:</strong> <a href="mailto:member3@example.com">member3@example.com</a></p>
+            <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/member3" target="_blank">linkedin.com/in/member3</a></p>
+        </div>
+    </div>
+</div>
+
+
 
 
     <!-- Footer -->
