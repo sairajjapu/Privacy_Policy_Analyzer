@@ -1,0 +1,81 @@
+/* Body styling */
+body {
+  background: linear-gradient(135deg, #9333ea, #ec4899);
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 20px;
+  width: 350px;   /* popup width */
+  max-height: 500px; /* popup max height */
+  overflow-y: auto;  /* scroll if content grows */
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Title */
+h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Main button (Fetch Links) */
+#getLinks {
+  display: block;
+  width: 100%;
+  background: linear-gradient(135deg, #9333ea, #ec4899);
+  border: none;
+  padding: 12px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 15px;
+}
+
+#getLinks:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Link buttons */
+.link-btn {
+  display: block;
+  width: 100%;
+  background: linear-gradient(135deg, #9333ea, #ec4899);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  word-wrap: break-word; /* prevent long URLs overflow */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.link-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Result box */
+.result-box {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+  max-height: 150px;
+  overflow-y: auto; /* scroll if analysis text is long */
+  word-wrap: break-word;
+}
+.result-box::-webkit-scrollbar {
+  width: 6px;
+}

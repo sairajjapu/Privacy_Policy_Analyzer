@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Privacy Policy Analyzer",
+  "version": "1.0",
+  "description": "Extract and Analyze privacy policy and terms links directly from websites.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  },
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["<all_urls>"]
+}
