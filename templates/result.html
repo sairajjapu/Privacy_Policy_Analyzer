@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dark Gaurdians</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="description" content="Privacy Policy Analyzer - Analyze privacy policies for dark patterns and get summaries.">
+    <meta name="keywords" content="Privacy Policy, Analyzer, Dark Patterns, AI, Summary, Legal, GDPR, CCPA">
+    <meta name="author" content="Your Name or Company">
+    <meta property="og:title" content="Privacy Policy Analyzer">
+    <meta property="og:description" content="Analyze privacy policies for dark patterns and get summaries.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com">
+    <meta property="og:image" content="https://yourdomain.com/static/preview-image.png">
+    <link rel="icon" href="{{ url_for('static', filename='logo.png') }}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='logo.png') }}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background: linear-gradient(to right, #e1f5fe, #fce4ec);
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            min-height: 100vh; /* full viewport height */
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Navbar */
+        .navbar {
+            background-color: #00796b;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .navbar h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color:white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 4px 0;
+        }
+
+           @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                align-items: flex-start;   /* left align */
+                width: 100%;
+                background-color: #00796b;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                padding: 1rem 2rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+                animation: dropDown 0.4s ease-in-out;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            animation: fadeSlide 1.2s ease-out;
+        }
+
+        h2 {
+            text-align: center;
+            color: #00695c;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .status {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+        .status.success { color: green; animation: glowSuccess 2s infinite alternate; }
+        .status.warning { color: red; animation: pulseWarning 1.5s infinite; }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section h3 {
+            color: #00796b;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        ul { list-style: disc; padding-left: 1.5rem; }
+        ul li {
+            opacity: 0;
+            animation: fadeList 0.8s ease forwards;
+        }
+        ul li:nth-child(1) { animation-delay: 0.2s; }
+        ul li:nth-child(2) { animation-delay: 0.4s; }
+        ul li:nth-child(3) { animation-delay: 0.6s; }
+        ul li:nth-child(4) { animation-delay: 0.8s; }
+        ul li:nth-child(5) { animation-delay: 1s; }
+
+        .summary {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-top: 1rem;
+            animation: typing 4s steps(40, end), blink .75s step-end infinite;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid #00796b;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #004d40;
+            position:relative;
+            color: #fff;
+            padding: 1rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* 🔥 Animations */
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeList {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes pulseWarning {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes glowSuccess {
+            from { text-shadow: 0 0 5px #4caf50; }
+            to { text-shadow: 0 0 15px #81c784; }
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: #00796b; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <h2>Dark Gaurdians</h2>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('team') }}">Our Team</a>
+            <a href="{{ url_for('contact') }}">Contact Us</a>
+        </div>
+    </div>
+    <main>
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <h2>🔍 Analysis Result</h2>
+            <p><strong>Analyzed URL:</strong> <a href="{{ url }}" target="_blank">{{ url }}</a></p>
+
+            <div class="section">
+            <h3>⚠️ Critical Sentences</h3>
+            {% if critical %}
+                {% for category, data in critical.items() %}
+                    <div style="margin-bottom:1rem;">
+                        <strong>{{ category }}</strong>: {{ data.description }}
+                        <ul>
+                            {% for match in data.matches %}
+                                <li>{{ match }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No critical sentences found.</p>
+            {% endif %}
+        </div>
+
+        {% if translated_text %}
+        <div class="section">
+            <h3>🌐 Translated Text ({{ request.form.get('translate') }})</h3>
+            <p>{{ translated_text }}</p>
+        </div>
+        {% endif %}
+        <div style="background-color: #fff3cd; color: #856404; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center;">
+            <Strong>THANK YOU❤️</Strong><br>⚠️ This is a <strong>Beta Version</strong>. Remaining features will be added soon.
+        </div>
+    </div>
+                </div>
+            </div>
+            </main>
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Dark Gaurdians | Made with ❤️ to protect your rights</p>
+    </footer>
+</body>
+</html>

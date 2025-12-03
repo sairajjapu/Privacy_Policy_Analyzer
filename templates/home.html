@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dark Gaurdians</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='logo.png') }}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='MinLogo.png') }}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #e1f5fe, #fce4ec);
+            text-align: center;
+            padding: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Navbar */
+        .navbar {
+            background-color: #00796b;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .navbar h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 4px 0;
+        }
+
+           @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                align-items: flex-start;   /* left align */
+                width: 100%;
+                background-color: #00796b;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                padding: 1rem 2rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+                animation: dropDown 0.4s ease-in-out;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        /* Main Content */
+        .section {
+            max-width: 950px;
+            margin: 2rem auto;
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #00796b;
+        }
+
+        ul {
+            text-align: left;
+            margin: 1rem auto;
+            display: inline-block;
+            padding-left: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        .button {
+            margin-top: 2rem;
+            display: inline-block;
+            background-color: #00796b;
+            color: #fff;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background-color: #004d40;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #004d40;
+            position: relative;
+            color: #fff;
+            padding: 1rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Apply Animations */
+        .navbar {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .section {
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        h1 {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .button:hover {
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        .nav-links.active {
+            animation: slideIn 0.4s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h2>Dark Gaurdians</h2>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('team') }}">Our Team</a>
+            <a href="{{ url_for('contact') }}">Contact Us</a>
+        </div>
+    </div>
+
+    <!-- Main Section -->
+    <div class="section">
+        <h1>🔐 Privacy Policy Analyzer</h1>
+        <p><strong>Tired of reading endless privacy policies?</strong></p>
+        <p> So are we. Most people just click “Agree” without even reading them.</p>
+        <p>This tool does the boring part for you.</p>
+        <p> We help you:</p>
+        <ul>
+            <li>✅ <strong>Simplify</strong> long and complex policies into plain, user-friendly summaries.</li>
+            <li>⚠️ <span class="highlight">Detect dark patterns</span> – like hidden charges, consent traps, and data selling tricks.</li>
+            <li>🎯 Focus only on what <strong>you need to know</strong> as a user – not what companies bury in legal jargon.</li>
+        </ul>
+        <p>We believe in privacy, transparency, and giving you the power to understand what you're agreeing to – <strong>without reading a novel</strong>.</p>
+        <p><strong>No data is stored.</strong> No funny business.</p>
+        <a href="{{ url_for('analyze') }}" class="button">🔍 Start Analyzing</a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Dark Gaurdians | Made with ❤️ to protect your rights</p>
+    </footer>
+
+    <!-- JavaScript for Mobile Nav -->
+    <script>
+        function toggleMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.toggle('active');
+        }
+    </script>
+
+</body>
+</html>

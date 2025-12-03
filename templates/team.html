@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dark Gaurdians</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='logo.png') }}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='logo.png') }}">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background: linear-gradient(to right, #e1f5fe, #fce4ec); padding: 0; margin: 0; text-align: center; }
+
+        /* Navbar */
+        .navbar {
+            background-color: #00796b;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        .navbar h2 { margin: 0; font-size: 1.5rem; }
+        .nav-links { display: flex; gap: 1.5rem; }
+        .nav-links a { color: #fff; text-decoration: none; font-weight: bold; transition: color 0.3s; }
+        .nav-links a:hover { color: #c8e6c9; }
+        .hamburger { display: none; flex-direction: column; cursor: pointer; }
+        .hamburger div { width: 25px; height: 3px; background-color: white; margin: 4px 0; }
+
+        @media(max-width:768px){
+            .nav-links { display: none; flex-direction: column; background-color: #00796b; width:100%; position:absolute; top:64px; left:0; padding:1rem 2rem; }
+            .nav-links.active { display:flex; animation: dropDown 0.5s ease-in-out; }
+            .hamburger { display:flex; }
+        }
+
+        /* Section Cards */
+        .section, .team-card { 
+            background: #fff; 
+            border-radius: 15px; 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1); 
+            margin: 2rem auto; 
+            padding: 2rem; 
+            max-width: 900px; 
+            animation: fadeInUp 1s ease-in-out; 
+        }
+        .team-card p{
+            margin-bottom: 1.5rem;
+        }
+        .team-card { transition: transform 0.3s, box-shadow 0.3s; }
+        .team-card:hover { transform: translateY(-5px); box-shadow: 0 12px 28px rgba(0,0,0,0.2); }
+
+        /* Headings */
+        h1, h3, h4 { color: #00796b; margin-bottom:1rem; animation: float 3s ease-in-out infinite; }
+        h3 { font-size: 1.8rem; }
+        h4 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+
+        i.inactive {
+  color: #aaa;             /* gray/faded */
+  opacity: 0.6;            /* less prominent */
+  pointer-events: none;    /* no click */
+  cursor: not-allowed;     /* disabled cursor */
+}
+
+        /* Members */
+        .members {
+            flex:1 1 250px;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            padding: 1rem;
+            background:#f9f9f9;
+            text-align:center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .members:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0,0,0,0.2); }
+        .members img { width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:0.8rem; }
+        .memberss {
+            flex:1 1 250px;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            padding: 1rem;
+            background:#f9f9f9;
+            text-align:center;
+            width: 500 px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .memberss:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0,0,0,0.2); }
+        .memberss img { width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:0.8rem; }
+        
+        
+        .social-icons { display: flex; justify-content: center; gap: 1rem; margin-top: 0.5rem; }
+        .social-icons a { color: #00796b; font-size: 1.2rem; transition: transform 0.3s, color 0.3s; }
+        .social-icons a:hover { transform: scale(1.2); color: #004d40; }
+
+        /* Layout */
+        .team-container { display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:center; }
+
+        /* Footer */
+        .footer { background-color:#004d40; color:#fff; padding:1rem 2rem; text-align:center; margin-top:2rem; }
+        .footer p { font-size:0.9rem; }
+
+        /* Animations */
+        @keyframes dropDown { from { transform: translateY(-100%); opacity:0; } to { transform: translateY(0); opacity:1; } }
+        @keyframes fadeInUp { from { opacity:0; transform: translateY(40px); } to { opacity:1; transform: translateY(0); } }
+        @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
+        @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+
+        /* Responsive */
+        @media(max-width:768px){
+            .section, .team-card { margin:1rem; padding:1rem; max-width:100%; }
+            .members,.memberss { 
+                flex: 1 1 100%;   /* full width */
+                width: 100%;      /* force stretch */
+                margin: 0.5rem 0;
+            }
+            .team-container { flex-direction: column; align-items:center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <h2>Dark Gaurdians</h2>
+        <div class="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="nav-links" id="navLinks">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('team') }}">Our Team</a>
+        <a href="{{ url_for('contact') }}">Contact Us</a>
+    </div>
+    </div>
+
+    <!-- Special Thanks -->
+    <div class="team-card">
+        <h3>🌟 Special Thanks</h3>
+        <p>We’d like to dedicate our heartfelt thanks to the person who guided and supported us:</p>
+        <div class="team-container">
+            <div class="memberss">
+                <img src="{{ url_for('static', filename='images/phaneendra.jpeg') }}" alt="Helper">
+                <h4>Dr.Ch.Phaneendhra</h4>
+                <h5>Associate Professor</h5>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Members -->
+    <div class="team-card">
+        <h3>🤝 Meet the Team</h3>
+        <p>We’d love to hear from you! Reach out to any of us below:</p>
+        <div class="team-container">
+            <div class="members">
+                <img src="{{ url_for('static', filename='images/member1.jpeg') }}" alt="Sairaj Japu">
+                <h4>Sairaj Japu</h4>
+                <div class="social-icons">
+                    <a href="https://linkedin.com/in/sairajjapu" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="members">
+                <img src="{{ url_for('static', filename='images/member_2.jpeg') }}" alt="Likitha">
+                <h4>Likitha</h4>
+                <div class="social-icons">
+                    <a href="https://linkedin.com/in/member2" class="disabled-icon" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://instagram.com/" class="disabled-icon" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="members">
+                <img src="{{ url_for('static', filename='images/member.jpg') }}" alt="Suma Priya">
+                <h4>Suma Priya</h4>
+                <div class="social-icons">
+                    <a href="#" target="_blank" class="disabled-icon"><i class="fab fa-linkedin inactive"></i></a>
+                    <a href="#" target="_blank" class="disabled-icon"><i class="fab fa-instagram inactive"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 Dark Gaurdians | Made with ❤️ to protect your rights</p>
+    </div>
+
+    <!-- JS -->
+    <script>
+        function toggleMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
