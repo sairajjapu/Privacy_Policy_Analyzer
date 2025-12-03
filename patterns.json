@@ -1,0 +1,30 @@
+{
+  "data_sharing": {
+    "keywords": ["share data", "sell data", "transfer data", "third party", "advertiser", "broker", "affiliate"],
+    "description": "This section indicates that your data may be shared, sold, or transferred to third parties such as advertisers, brokers, or affiliates."
+  },
+  "consent_manipulation": {
+    "keywords": ["pre-selected", "default opt-in", "implied consent", "forced consent", "auto subscribe"],
+    "description": "This indicates practices where consent is implied, pre-selected, or default opt-in, forcing the user to accept without true choice."
+  },
+  "legal_ambiguity": {
+    "keywords": ["reserve the right", "without notice", "unilateral change", "modify anytime", "sole discretion"],
+    "description": "Clauses that are vague, allow unilateral changes, or reserve rights without user notice."
+  },
+  "hidden_costs": {
+    "keywords": ["extra fees", "undisclosed charges", "billing changes", "hidden charges", "service fee"],
+    "description": "Mentions of extra fees, undisclosed charges, or billing changes without transparency."
+  },
+  "miscellaneous": {
+    "keywords": ["disclosure", "retention", "disclaimer", "as is", "not responsible"],
+    "description": "General vague language such as retention, disclosure, and disclaimers that are not user-friendly."
+  },
+  "liability_disclaimer": {
+    "keywords": ["not liable", "no responsibility", "without warranty", "at your own risk"],
+    "description": "Statements denying responsibility for damages, errors, or losses, leaving users unprotected."
+  },
+  "surveillance_tracking": {
+    "keywords": ["tracking", "monitoring", "session recording", "profile", "cookies", "analytics"],
+    "description": "Indicates tracking, monitoring, session recording, or behavior profiling."
+  }
+}
